@@ -192,61 +192,109 @@ yeccpars2(0=S, Cat, Ss, Stack, T, Ts, Tzr) ->
 %% yeccpars2(1=S, Cat, Ss, Stack, T, Ts, Tzr) ->
 %%  yeccpars2_1(S, Cat, Ss, Stack, T, Ts, Tzr);
 yeccpars2(2=S, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_2(S, Cat, Ss, Stack, T, Ts, Tzr);
+ yeccpars2_0(S, Cat, Ss, Stack, T, Ts, Tzr);
 yeccpars2(3=S, Cat, Ss, Stack, T, Ts, Tzr) ->
  yeccpars2_3(S, Cat, Ss, Stack, T, Ts, Tzr);
 yeccpars2(4=S, Cat, Ss, Stack, T, Ts, Tzr) ->
  yeccpars2_4(S, Cat, Ss, Stack, T, Ts, Tzr);
 yeccpars2(5=S, Cat, Ss, Stack, T, Ts, Tzr) ->
+ yeccpars2_5(S, Cat, Ss, Stack, T, Ts, Tzr);
+yeccpars2(6=S, Cat, Ss, Stack, T, Ts, Tzr) ->
  yeccpars2_0(S, Cat, Ss, Stack, T, Ts, Tzr);
-%% yeccpars2(6=S, Cat, Ss, Stack, T, Ts, Tzr) ->
-%%  yeccpars2_6(S, Cat, Ss, Stack, T, Ts, Tzr);
+%% yeccpars2(7=S, Cat, Ss, Stack, T, Ts, Tzr) ->
+%%  yeccpars2_7(S, Cat, Ss, Stack, T, Ts, Tzr);
+yeccpars2(8=S, Cat, Ss, Stack, T, Ts, Tzr) ->
+ yeccpars2_0(S, Cat, Ss, Stack, T, Ts, Tzr);
+%% yeccpars2(9=S, Cat, Ss, Stack, T, Ts, Tzr) ->
+%%  yeccpars2_9(S, Cat, Ss, Stack, T, Ts, Tzr);
+%% yeccpars2(10=S, Cat, Ss, Stack, T, Ts, Tzr) ->
+%%  yeccpars2_10(S, Cat, Ss, Stack, T, Ts, Tzr);
 yeccpars2(Other, _, _, _, _, _, _) ->
  erlang:error({yecc_bug,"1.4",{missing_state_in_action_table, Other}}).
 
-yeccpars2_0(S, atom, Ss, Stack, T, Ts, Tzr) ->
+yeccpars2_0(S, '-', Ss, Stack, T, Ts, Tzr) ->
  yeccpars1(S, 2, Ss, Stack, T, Ts, Tzr);
-yeccpars2_0(S, float, Ss, Stack, T, Ts, Tzr) ->
+yeccpars2_0(S, atom, Ss, Stack, T, Ts, Tzr) ->
  yeccpars1(S, 3, Ss, Stack, T, Ts, Tzr);
-yeccpars2_0(S, integer, Ss, Stack, T, Ts, Tzr) ->
+yeccpars2_0(S, float, Ss, Stack, T, Ts, Tzr) ->
  yeccpars1(S, 4, Ss, Stack, T, Ts, Tzr);
+yeccpars2_0(S, integer, Ss, Stack, T, Ts, Tzr) ->
+ yeccpars1(S, 5, Ss, Stack, T, Ts, Tzr);
 yeccpars2_0(_, _, _, _, T, _, _) ->
  yeccerror(T).
 
 yeccpars2_1(_S, '$end', _Ss, Stack, _T, _Ts, _Tzr) ->
  {ok, hd(Stack)};
+yeccpars2_1(S, '+', Ss, Stack, T, Ts, Tzr) ->
+ yeccpars1(S, 8, Ss, Stack, T, Ts, Tzr);
 yeccpars2_1(_, _, _, _, T, _, _) ->
  yeccerror(T).
 
-yeccpars2_2(S, ':', Ss, Stack, T, Ts, Tzr) ->
- yeccpars1(S, 5, Ss, Stack, T, Ts, Tzr);
-yeccpars2_2(_, _, _, _, T, _, _) ->
- yeccerror(T).
+%% yeccpars2_2: see yeccpars2_0
 
+yeccpars2_3(S, ':', Ss, Stack, T, Ts, Tzr) ->
+ yeccpars1(S, 6, Ss, Stack, T, Ts, Tzr);
 yeccpars2_3(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
  yeccgoto_expr(hd(Ss), Cat, Ss, Stack, T, Ts, Tzr).
 
 yeccpars2_4(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
  yeccgoto_expr(hd(Ss), Cat, Ss, Stack, T, Ts, Tzr).
 
-%% yeccpars2_5: see yeccpars2_0
+yeccpars2_5(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
+ yeccgoto_expr(hd(Ss), Cat, Ss, Stack, T, Ts, Tzr).
 
-yeccpars2_6(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
+%% yeccpars2_6: see yeccpars2_0
+
+yeccpars2_7(S, '+', Ss, Stack, T, Ts, Tzr) ->
+ yeccpars1(S, 8, Ss, Stack, T, Ts, Tzr);
+yeccpars2_7(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
  [_,_|Nss] = Ss,
- NewStack = yeccpars2_6_(Stack),
+ NewStack = yeccpars2_7_(Stack),
+ yeccgoto_expr(hd(Nss), Cat, Nss, NewStack, T, Ts, Tzr).
+
+%% yeccpars2_8: see yeccpars2_0
+
+yeccpars2_9(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
+ [_,_|Nss] = Ss,
+ NewStack = yeccpars2_9_(Stack),
+ yeccgoto_expr(hd(Nss), Cat, Nss, NewStack, T, Ts, Tzr).
+
+yeccpars2_10(_S, Cat, Ss, Stack, T, Ts, Tzr) ->
+ [_|Nss] = Ss,
+ NewStack = yeccpars2_10_(Stack),
  yeccgoto_expr(hd(Nss), Cat, Nss, NewStack, T, Ts, Tzr).
 
 yeccgoto_expr(0, Cat, Ss, Stack, T, Ts, Tzr) ->
  yeccpars2_1(1, Cat, Ss, Stack, T, Ts, Tzr);
-yeccgoto_expr(5=_S, Cat, Ss, Stack, T, Ts, Tzr) ->
- yeccpars2_6(_S, Cat, Ss, Stack, T, Ts, Tzr).
+yeccgoto_expr(2=_S, Cat, Ss, Stack, T, Ts, Tzr) ->
+ yeccpars2_10(_S, Cat, Ss, Stack, T, Ts, Tzr);
+yeccgoto_expr(6, Cat, Ss, Stack, T, Ts, Tzr) ->
+ yeccpars2_7(7, Cat, Ss, Stack, T, Ts, Tzr);
+yeccgoto_expr(8=_S, Cat, Ss, Stack, T, Ts, Tzr) ->
+ yeccpars2_9(_S, Cat, Ss, Stack, T, Ts, Tzr).
 
--compile({inline,yeccpars2_6_/1}).
--file("/home/zangther/prog/Divers/pute/pute.yrl", 8).
-yeccpars2_6_(__Stack0) ->
+-compile({inline,yeccpars2_7_/1}).
+-file("/home/zangther/prog/Divers/pute/pute.yrl", 10).
+yeccpars2_7_(__Stack0) ->
  [__3,__2,__1 | __Stack] = __Stack0,
  [begin
    { assign , __1 , __3 }
+  end | __Stack].
+
+-compile({inline,yeccpars2_9_/1}).
+-file("/home/zangther/prog/Divers/pute/pute.yrl", 12).
+yeccpars2_9_(__Stack0) ->
+ [__3,__2,__1 | __Stack] = __Stack0,
+ [begin
+   { add , __1 , __3 }
+  end | __Stack].
+
+-compile({inline,yeccpars2_10_/1}).
+-file("/home/zangther/prog/Divers/pute/pute.yrl", 14).
+yeccpars2_10_(__Stack0) ->
+ [__2,__1 | __Stack] = __Stack0,
+ [begin
+   { sub , 0 , __2 }
   end | __Stack].
 
 
