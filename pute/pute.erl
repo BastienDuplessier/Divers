@@ -229,11 +229,11 @@ yeccgoto_expr(0, Cat, Ss, Stack, T, Ts, Tzr) ->
  yeccpars2_1(1, Cat, Ss, Stack, T, Ts, Tzr).
 
 -compile({inline,yeccpars2_4_/1}).
--file("/home/zangther/prog/Divers/pute/pute.yrl", 0).
+-file("/home/zangther/prog/Divers/pute/pute.yrl", 8).
 yeccpars2_4_(__Stack0) ->
  [__3,__2,__1 | __Stack] = __Stack0,
  [begin
-   '$undefined'
+   { assign , __1 , __3 }
   end | __Stack].
 
 

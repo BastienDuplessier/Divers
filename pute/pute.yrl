@@ -9,4 +9,4 @@ Right 100 ':'.
 
 % Grammar
 expr ->
-    atom ':' integer.
+    atom ':' integer : {assign, '$1', '$3'}.
