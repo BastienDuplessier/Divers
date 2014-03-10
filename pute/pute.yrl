@@ -11,18 +11,18 @@ Left 400 '*'.
 
 % Grammar
 expr ->
-    atom ':' expr : {assign, '$1', '$3'}.
+    atom ':' expr : {":", '$1', '$3'}.
 expr ->
-    expr '+' expr : {add, '$1', '$3'}.
+    expr '+' expr : {"+", '$1', '$3'}.
 expr ->
     minus : '$1'.
 expr ->
-    expr minus : {add, '$1', '$2'}.
+    expr minus : {"+", '$1', '$2'}.
 expr ->
-    expr '*' expr : {mult, '$1', '$3'}.
+    expr '*' expr : {"*", '$1', '$3'}.
 
 minus ->
-    '-' expr : {sub, 0, '$2'}.
+    '-' expr : {"-", 0, '$2'}.
 
 expr ->
     atom : '$1'.
