@@ -19,5 +19,5 @@ values_test() ->
 plus_test() ->
     {ok,{add,{integer,1,1},{integer,1,1}}} = parse("1 + 1").
 minus_test() ->
-    {ok,{sub,0,{integer,1,1}}} = parse("-1").
-
+    {ok,{sub,0,{integer,1,1}}} = parse("-1"),
+    {ok,{add,{integer,1,1},{sub,0,{integer,1,1}}}} = parse("1 - 1").
