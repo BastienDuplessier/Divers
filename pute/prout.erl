@@ -23,3 +23,5 @@ minus_test() ->
     {ok,{"+",{integer,1,1},{"-",0,{integer,1,1}}}} = parse("1 - 1").
 mult_test() ->
     {ok,{"*",{integer,1,1},{integer,1,1}}} = parse("1 * 1").
+div_test() ->
+    {ok,{"/",{integer,1,1},{integer,1,1}}} = parse("1 / 1").

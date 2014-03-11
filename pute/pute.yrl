@@ -1,13 +1,13 @@
 % GrammarFile for language PUTE
 
 Nonterminals expr minus.
-Terminals ':' '+' '-' '*' atom integer float.
+Terminals ':' '+' '-' '*' '/' atom integer float.
 Rootsymbol expr.
 
 % Operators
 Right 100 ':'.
 Left 200 '+' '-'.
-Left 400 '*'.
+Left 400 '*' '/'.
 
 % Grammar
 expr ->
@@ -20,6 +20,8 @@ expr ->
     expr minus : {"+", '$1', '$2'}.
 expr ->
     expr '*' expr : {"*", '$1', '$3'}.
+expr ->
+    expr '/' expr : {"/", '$1', '$3'}.
 
 minus ->
     '-' expr : {"-", 0, '$2'}.
