@@ -7,7 +7,7 @@ Unicode::String->stringify_as('utf8');
 @fichiers = `ls LCI/`;
 $nbFichiers = @fichiers;
 $i = 0;
-print "$nbFichiers\n";
+
 foreach $fichier (@fichiers){
     open(FILIN, "<LCI/$fichier") || die"ERREUR OUVERTURE FICHIER IN";
     open(FILOUT, ">LCI_OUTPUT/$fichier") || die"ERREUR OUVERTURE FICHIER OUT";

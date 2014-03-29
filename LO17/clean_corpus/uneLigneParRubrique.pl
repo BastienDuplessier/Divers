@@ -17,11 +17,6 @@ foreach $fichier (@fichiers){
 
 	$missing = "";
 
-	if(/IBL_ID=27914/){
-	   s/IBL_ID=27914/\n/;
-	} else {
-	    $missing .= "\n";
-	}
 	if(/A voir aussi/){
 	    s/A voir aussi/$missing\nA voir aussi/;
 	    $missing = "";
@@ -48,6 +43,7 @@ foreach $fichier (@fichiers){
 	}
 
 	print FILOUT $_;
+	print FILOUT "\n";
     }
 
     close(FILIN);
